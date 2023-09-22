@@ -37,3 +37,44 @@
     </div>
 </body>
 </html>
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Three Images in a Row</title>
+    <style>
+        /* Style for the image container */
+        .image-row {
+            display: flex; /* Use flexbox layout */
+            justify-content: space-between; /* Space evenly between images */
+        }
+
+        /* Style for individual images */
+        .image {
+            flex: 0 0 30%; /* Each image takes up 30% of the container width */
+            margin: 10px; /* Add some margin for spacing */
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Container for the image row -->
+    <div class="image-row">
+        <!-- First image -->
+        <div class="image">
+            <img src="images/completion-certs.png" alt="Image 1">
+        </div>
+
+        <!-- Second image -->
+        <div class="image">
+            <img src="images/itprotv.png" alt="Image 2">
+        </div>
+
+        <!-- Third image -->
+        <div class="image">
+            <img src="images/linkedin.png" alt="Image 3">
+        </div>
+    </div>
+</body>
+</html>
