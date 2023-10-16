@@ -1,0 +1,235 @@
+<p><strong>What is digital forensics </strong></p>
+<p>-examination of digital storage and digital environments in order to determine what has happened</p>
+<p>- also including monitoring in real time</p>
+<p>-forensic investigating is collecting analysing and reporting</p>
+<p>computer forensics face same scrutiny as an analysis of a fingerprint or DNA test</p>
+<p><strong>&nbsp;</strong></p>
+<p><strong>Types of crimes </strong></p>
+<ul>
+<li>cyber crime</li>
+<li>cyber aided crime</li>
+<li>crimes with digital evidence</li>
+</ul>
+<p><strong>computer theory chapter:</strong></p>
+<ul>
+<li>secondary storage devices - hard drives , Cdr DVD's , flash drives and memory cards&nbsp;</li>
+<li>on hard drives the c: drive maybe a partition of 200 GB , analysis made sure that 50 GB is hidden somewhere or it has been formatted but that 50GB may contain valuable information</li>
+<li>hard drive formatting handled by the operating system</li>
+<li>repartition does not mean data is overwritten</li>
+<li>hard drive is made up of clusters and sectors that can be allocated to a file or a partition</li>
+<li>when hard drive partition you create a master boot record mbr or partition table</li>
+<li>the partition table is information of partitions , start an ending sector for each partition as well</li>
+<li>if you resize your partitions only the table gets updated the actual data on the hard drive is unaffected. this makes Daytona hard drive inaccessible to the operating system but still possible to recover using forensic tools</li>
+<li>also note an empty hard drive may just be a formatted hard drive , often only the partition table is removed</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>NTFS File systems:</strong></p>
+<ul>
+<li>the file system is essentially a structure used to control how data is stored and retrieved on a story device and is common content of a partition</li>
+<li>so a hard drive contains partitions</li>
+<li>a partition commonly contains a file system</li>
+<li>a file system is used to structure data</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>types of file systems:</strong></p>
+<ul>
+<li>EX64 (commonly found on Linux )</li>
+<li>nfs (common for network storage )</li>
+<li>fat 32 (common on surveillance videos and thumb drives )</li>
+</ul>
+<p>-partitions are stated in the partition table which are found in the master boot record</p>
+<p>&nbsp;</p>
+<ul>
+<li>A partition formatted with a NTFS file system begins with a metadata file called the partition boot sector</li>
+<li>this contains the master file table (MFT)</li>
+<li>MFT Is basically a Dictionary of all files and folders on the NTFS partition</li>
+<li>most important for forensic examiner in the MFT is the file records</li>
+<li>all files and folders on partition have one</li>
+<li>an mft record cannot be bigger than 1024 bytes (so files which are bigger than 600 bytes (as 400 bytes are reserved for filename and such ) cannot reside in record</li>
+<li>files contained in mft resident</li>
+<li>files not contained in mft are non resident</li>
+<li>be aware there is a backup mfti located at end of partition</li>
+<li>note a technology known as trim that overrides clusters that are unallocated by mft , used for SSD hard drives</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>File Structures:</strong></p>
+<ul>
+<li>common file structure, METADATA ACTUAL DATA&nbsp;&nbsp;&nbsp;&nbsp; TRAILER</li>
+<li>Metadata contains information on type of file (JPEG, PDF etc)</li>
+<li>search for files using metadata or trailers , searching for hexadecimal or alphanumerical file signatures</li>
+<li>most file formats such as plain text many picture formats are stored as plain files</li>
+<li>However some files including Microsoft Office files and compressed zip are stored as compound files</li>
+<li>compound files cannot be fully examined when they're in there packed state</li>
+<li>must be unpacked to be fully analysed</li>
+<li>because data in compressed state is represented differently</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Data Representation: </strong></p>
+<ul>
+<li>data stored on any storage media is in binary</li>
+<li>8 bits = one bite</li>
+<li>different apps may store data in different order</li>
+<li>single byte is 8 bits , left is more significant, right is least significant</li>
+<li>two ways to store subsequent bytes</li>
+<li>1st is big Indian , which is storing bikes with the biggest and 1st making the first bite the more significant</li>
+<li>2nd is little Indian , which is storing data with the smallest and first reading from left to right</li>
+<li>computers have different ways of representing data and characters also known as encoding (ascii, utf8, utf16)</li>
+<li>encoding is how sign is represented in binary or Hex</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Windows Registry:</strong></p>
+<ul>
+<li>Is it hierarchal database which stores information about users installed apps on the windows system itself</li>
+<li>great place for forensic examiners</li>
+<li>windows registry is tree structure , each node is a tree is called a key and every key may have a value or some keys</li>
+<li>the key can be as deep as 512 keys</li>
+<li>values that a key can container just arbitrary data up to the app to decide the format and interpretation</li>
+<li>the registry is made up of hives</li>
+<li>hives contain sets of data</li>
+<li>the high which is of most interest to a forensic examiner is the, SAM, Security, System , Software</li>
+<li>another file associated with user is NTUSER.DAT</li>
+<li>registry hives = system32/config/folder</li>
+<li>- ntuser.dat - stores info about specific user account</li>
+<li>software - information related to applications , common information she says the windows version installed it on the owner</li>
+<li>subkey = /mircosft/windowsnt/current version</li>
+<li>system - information about the system including USB drives that have been connected to the system , time zone , information about networks that the computer has been connected to</li>
+<li>sam and security - protected and cannot be viewed using regedit on a running computer but can be extracted from</li>
+<li>SAM - user information , uses on local machine ,login information , user created and stored hashes</li>
+<li>SYS - mainly system audit policy , syskey needed in collaboration to sam to crack files</li>
+<li></li>
+</ul>
+<p><strong>encryption and hashing: </strong></p>
+<ul>
+<li>cryptographic techniques to hide data</li>
+<li>for hash to be considered secure must have the following properties
+<ul>
+<li>collision resistant &nbsp;- meaning that there is only one H for each P</li>
+<li>irreversible - I mean it is impossible to derive P from H</li>
+</ul>
+</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>memory and paging: </strong></p>
+<ul>
+<li>memory is very important</li>
+<li>memory emptied when computer restarts so content in memory relates only to what the computer was up to since the last reboot</li>
+<li>when viewing encrypted data in a decrypted format , the decrypted version of the data is temporarily stored in memory. so it makes a good place to find encrypted data which has been decrypted</li>
+<li>whenever the computer needs to hold more data in memory than memory allows, part of the memory stored on hard drive this process is called PAGING</li>
+<li>on windows systems the paged out part of the memory are stored in a file called PAGEFILE.SYS, and it contains the same type of information as memory</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>notable artefacts :</strong></p>
+<ul>
+<li>metadata - very important , Information about information , most objects have metadata</li>
+<li>Exifdata: metadata stored in pictures , tells how the picture was taken and with what such as the information is the name of the device the person sometimes the GPS location</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>Prefetch:</strong></p>
+<ul>
+<li>process of bringing data and code pages into memory before it is needed</li>
+<li>idea is to track normal application usage unload the data the app usually needs doing one time when the app is loaded.</li>
+<li>process was implemented to increase performance of applications</li>
+<li>stored in prefetch files located in prefetch folder under system route</li>
+<li>most important function of prefetch files (from forensic view ) Is they contain information about how many times an executable was run on when it was last run</li>
+<li>filename of a prefetch file begins with the name of the executable followed by a hash of the location where the executable is stored</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>shellbags: </strong></p>
+<ul>
+<li>used to store information about gui settings for explorer , that is used to browse files and folders on a windows based computer</li>
+<li>means they store information about what preferences a user sets for viewing certain directories an example of this is how a user prefers the layout of the folds of the directory's</li>
+<li>the use of shellbags - from fact that a shell bag for certain folder is created when a user is actually viewing that folder</li>
+<li>thus meaning that user in question has visited that particular folder</li>
+<li>hey stored in ntuser.dat and usrclass.dat</li>
+<li>- shell bugs are not deleted find can serve as evidence of deleted folders and since they collect information about network shares , mounted encrypted volumes , removable media - they can provide that information as well</li>
+<li>shellbags need tools to pass through</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>.LNK file</strong></p>
+<ul>
+<li>Shortcuts within windows</li>
+<li>think of a shortcut you place on your desktop</li>
+<li>but several other reasons why the OS would create .lnk files that make them useful during forensic examinations , for instance .lnk files are created whenever a user opens a file local or remote</li>
+<li>what makes .lnk good ?
+<ul>
+<li>not deleted when remote drive containing the target file is removed open file is deleted</li>
+<li>good source of information about network storage , removable storage , undelete files</li>
+</ul>
+</li>
+<li>info in link files?
+<ul>
+<li>location of target file (the pah)</li>
+<li>time of creation , last update of link</li>
+<li>information of device let target stored , serial , local and type</li>
+</ul>
+</li>
+</ul>
+<p><strong>MRU &ndash; Stuff:</strong></p>
+<ul>
+<li>most recently used keys</li>
+<li>shows what last accessed</li>
+<li>when an event occurs an entry is created with a number . the order of events is recorded in numbers stored in dword (four bites)</li>
+<li>order in MRUlistEx I can tell in what order the events recorded in the listing appeared</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>thumbcache:</strong></p>
+<ul>
+<li>windows feature - purpose of making previewing of pictures quicker</li>
+<li>windows stores the miniatures of thumbnails when their first created</li>
+<li>stored in database files called thumb caches</li>
+<li>two things are important
+<ul>
+<li>contain the actual thumbnails produced when a user is viewing the content of the folder (smoother to analyse )</li>
+<li>they are not deleted and therefore thumbnails of pictures that was deleted or stored on a storage devices removed are still there</li>
+</ul>
+</li>
+<li>how's the thumbcache stored in the database he need a special programme to view them such as thumbcache viewer</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>windows event viewer:</strong></p>
+<ul>
+<li>event viewer maintains logs about the applications / system / security</li>
+<li>logs under security could be success or fail</li>
+<li>look at event IDs , very important in forensics</li>
+<li>located at winevt/logs in system32</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>program log files:</strong></p>
+<ul>
+<li>Those that do not log to event viewer are useful</li>
+<li>log files provide a wealth of information</li>
+<li>used in document upload or downloads , chat logs , applicatian behaviour</li>
+<li>go to rule of thumb is to look for application logs wherever there is a suspicion of an application being involved in a case</li>
+<li>look for logs in the user appdata folder under the system root programme data</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>USB device history :</strong></p>
+<ul>
+<li>windows keeps track of connected and unconnected USB drives</li>
+<li>windows combines information from three sources
+<ul>
+<li>Setupapiadev = hello log file located in sysroot/windows/INF</li>
+<li>the registry</li>
+<li>system logs</li>
+</ul>
+</li>
+<li>the most important information is the serial number</li>
+<li>additional information can be found in windows registry</li>
+<li>using USB thumbs will have several traces in registry all in system hive</li>
+<li>first interest = constrolset001/enum/usbstor - this key will hold sub keys for the different USB devices that have been connected</li>
+<li>other places are the mounted device in the registry</li>
+</ul>
+<p>&nbsp;</p>
+<p><strong>decryption and password enforcing:</strong></p>
+<ul>
+<li>practical tip is to analyse files and tell if a decryption is possible</li>
+<li>always analyse the software and algorithm you about to crack</li>
+<li>beware of the side channel attacks before doing decryption attack</li>
+<li>side channel is an attack where you find information by looking at sources that the creator of the system did not expect you to look at</li>
+<li>in forensics a common side channel would be computer memory
+<ul>
+<li>the reason is a temporary copy of the decrypted file may be kept in memory even after encryption has happened</li>
+</ul>
+</li>
+<li>remember parts of memory are paged out and stored in a file on the hard drive called pagefile.sys, wait can't be recovered using forensic tools</li>
+</ul>
